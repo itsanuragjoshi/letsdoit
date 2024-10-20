@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+**LetsDoIt - Task Management App**
 
-## Getting Started
+**Overview**
 
-First, run the development server:
+The Task Management App is a simple yet effective tool for managing tasks and improving productivity. Users can create, edit, and delete tasks, as well as prioritize them based on urgency or importance. The app provides an intuitive interface, making it easy to keep track of tasks and their statuses.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Key Features**
+
+-   Create, edit, and delete tasks.
+-   Prioritize tasks by assigning different levels of urgency.
+-   Filter and sort tasks based on priority.
+-   User-friendly interface built with React and TipTap for rich text editing.
+
+**Technologies Used**
+
+-   **Frontend**: Next.js, TipTap
+-   **Backend**: Next.js, `fs` (File System) module for API
+-   **Styling**: Tailwind CSS
+-   **Icons**: Lucide Icons
+
+**Getting Started**
+
+To set up the project locally, follow these steps:
+
+**Prerequisites**
+
+Make sure you have the following installed:
+
+-   Node.js (version 14 or above)
+-   npm (Node Package Manager)
+
+**Installation**
+
+1.  **Clone the repository**:
+
+```
+git clone https://github.com/itsanuragjoshi/letsdoit.git
+
+cd letsdoit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+**Install dependencies**:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```npm install```
 
-## Learn More
+**Run the application**:
 
-To learn more about Next.js, take a look at the following resources:
+```npm run dev```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+***Open your browser and go to http://localhost:3000***
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Usage**
+Once the application is running, you can:
 
-## Deploy on Vercel
+-   Add a new task by entering the task details and clicking the "Add Task" button.
+-   Edit an existing task by clicking on it and modifying the content.
+-   Delete a task by clicking the "Delete" button next to it.
+-   Set the priority (Urgent, High, Normal, Low) and status (To Do, In Progress, Completed) of each task, which will affect how they are sorted in the list.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Database and API
+
+The application uses a local JSON file (`data/db.json`) to simulate a database. This file stores the task data, enabling the app to persist information across sessions.
+
+### CRUD API
+
+The app utilizes Next.js's API routes, along with the `fs` (File System) module, to create a simple CRUD API for managing tasks. The following functionalities are provided:
+
+-   **Create**: Add new tasks to the database.
+-   **Read**: Retrieve the list of tasks from the database.
+-   **Update**: Modify existing tasks.
+-   **Delete**: Remove tasks from the database.
+
+This setup allows for efficient task management and data persistence using a straightforward file-based approach.
+
+**Sorting Tasks by Priority**
+
+Tasks can be sorted based on their priority levels. The approach taken for sorting involves the following:
+
+1.  **Priority Levels**: Each task can be assigned a priority level (e.g., High, Medium, Low). This is done through the UI when creating or editing a task.
+2.  **Sorting Logic**: When displaying the task list, tasks are first grouped by their status and then sorted by their priority levels. The sorting algorithm categorizes tasks based on their assigned priority, ensuring that high-priority tasks appear at the top of the list.
+3.  **Dynamic Updates**: Whenever a task's priority is changed, the list automatically re-renders to reflect the new order.
+
+**Example of Sorting Logic**
+
+Here's a simple example of how tasks might be sorted based on their priority levels:
+
+```
+const sortedTasks = tasks.sort((a, b) => {
+ const priorityOrder = { high: 1, medium: 2, low: 3 };
+ return priorityOrder[a.priority] - priorityOrder[b.priority];
+});
+```
