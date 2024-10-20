@@ -11,10 +11,9 @@ export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTask, setEditTask] = useState(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for delete modal
-  const [taskToDelete, setTaskToDelete] = useState(null); // Task ID for deletion
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
-  // Fetch tasks from API with error handling
   const fetchTasks = async () => {
     try {
       const res = await fetch("/api/tasks");
@@ -29,7 +28,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchTasks(); // Call fetchTasks when component mounts
+    fetchTasks();
   }, []);
 
   const handleOpenModal = (task = null) => {
@@ -44,26 +43,24 @@ export default function Home() {
 
   const handleEdit = async (id) => {
     try {
-      const res = await fetch(`/api/tasks/${id}`); // Fetch task details by ID
+      const res = await fetch(`/api/tasks/${id}`);
       if (!res.ok) {
         throw new Error("Failed to fetch task");
       }
-      const taskToEdit = await res.json(); // Get task details
-      handleOpenModal(taskToEdit); // Open the modal with the fetched task
+      const taskToEdit = await res.json();
+      handleOpenModal(taskToEdit);
     } catch (error) {
       console.error("Error fetching task for edit:", error);
     }
   };
 
-  // New handleDelete function
   const handleDelete = async (taskId) => {
     await fetch(`/api/tasks/${taskId}`, {
       method: "DELETE",
     });
-    fetchTasks(); // Call fetchTasks to update the task list
+    fetchTasks();
   };
 
-  // Confirm Delete Modal functions
   const openDeleteModal = (task) => {
     setTaskToDelete(task);
     setIsDeleteModalOpen(true);
@@ -159,7 +156,7 @@ export default function Home() {
             text="Add Task"
           />
         </div>
-        {/* Table for To Do tasks */}
+
         {tasksByStatus.todo.length > 0 && (
           <div>
             <div className="flex items-center gap-1 text-lg uppercase font-semibold">
@@ -169,7 +166,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Table for In Progress tasks */}
         {tasksByStatus.inProgress.length > 0 && (
           <div>
             <div className="flex items-center gap-1 text-lg uppercase font-semibold">
@@ -180,7 +176,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Table for Completed tasks */}
         {tasksByStatus.completed.length > 0 && (
           <div>
             <div className="flex items-center gap-1 text-lg uppercase font-semibold">
@@ -200,7 +195,7 @@ export default function Home() {
           onTaskUpdated={fetchTasks}
         />
       )}
-      {/* Confirm Delete Modal */}
+
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
@@ -211,7 +206,6 @@ export default function Home() {
   );
 }
 
-// Reusable Component for Task Priority
 const PriorityComponent = ({ option }) => (
   <div className="flex items-center gap-1">
     {option?.icon}
@@ -219,7 +213,6 @@ const PriorityComponent = ({ option }) => (
   </div>
 );
 
-// Reusable Component for Task Status
 const StatusComponent = ({ option }) => (
   <div className="flex items-center gap-1">
     {option?.icon}
@@ -227,7 +220,6 @@ const StatusComponent = ({ option }) => (
   </div>
 );
 
-// Reusable Component for Action Buttons
 const ActionComponent = ({ id, taskName, onEdit, onDelete }) => (
   <div>
     <Button
@@ -235,7 +227,7 @@ const ActionComponent = ({ id, taskName, onEdit, onDelete }) => (
       size="small"
       icon={PencilIcon}
       showText={false}
-      onClick={() => onEdit(id)} // Use the passed onEdit function
+      onClick={() => onEdit(id)}
       aria-label="Edit"
       title="Edit"
       text="Edit"
@@ -245,7 +237,7 @@ const ActionComponent = ({ id, taskName, onEdit, onDelete }) => (
       size="small"
       icon={Trash2Icon}
       showText={false}
-      onClick={() => onDelete({ _id: id, taskName })} // Pass task ID and name to delete
+      onClick={() => onDelete({ _id: id, taskName })}
       aria-label="Delete"
       title="Delete"
       text="Delete"

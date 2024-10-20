@@ -1,18 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // Use this to get query params
+import { useSearchParams } from "next/navigation";
 
 const Search = () => {
-  const searchParams = useSearchParams(); // Access search params
-  const q = searchParams.get("q"); // Get the "q" parameter from the URL
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q");
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks based on the search query
   useEffect(() => {
     const fetchTasks = async () => {
-      if (!q) return; // If there's no query, don't fetch
+      if (!q) return;
       setLoading(true);
 
       try {
@@ -27,7 +26,7 @@ const Search = () => {
     };
 
     fetchTasks();
-  }, [q]); // Trigger when "q" changes
+  }, [q]);
 
   return (
     <main className="container mx-auto p-4">
