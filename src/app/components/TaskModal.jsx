@@ -97,6 +97,7 @@ export default function TaskModal({ isOpen, onClose, task, onTaskUpdated }) {
                 aria-label={task ? "Update Task" : "Add Task"}
                 title={task ? "Update Task" : "Add Task"}
                 text={task ? "Update Task" : "Add Task"}
+                disabled={!taskName} // Disable button if taskName is empty
               />
             </div>
           </div>

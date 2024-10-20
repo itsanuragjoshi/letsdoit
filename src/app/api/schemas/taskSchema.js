@@ -3,7 +3,7 @@ import { z } from "zod";
 export const taskSchema = z.object({
   taskName: z
     .string()
-    .min(3, "Task title must be at least 3 characters long")
+    .min(1, "Task title must be at least 1 characters long")
     .max(100, "Task title must be less than 100 characters long"),
 
   taskDescription: z.string().optional(),
